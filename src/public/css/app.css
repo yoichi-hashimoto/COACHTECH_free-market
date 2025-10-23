@@ -1,0 +1,44 @@
+.header{
+    background-color: black;
+    display: flex;
+    height: 10vh;
+    align-items: center;
+    justify-content: space-between ;
+}
+
+.header__img{
+    width: 20vw;
+}
+
+.header__items{
+    display: flex;
+}
+
+.header__input{
+    width: 30vw;
+    height: 6vh;
+    border-radius: 5px;
+    margin-right:5vw;
+    font-size: 16px;
+}
+
+.links{
+    display:flex;
+    color:white;
+    margin:0 3vw;
+    list-style: none;
+    align-items: center;
+}
+
+.header__login , .header__mypage{
+    padding: 5px;
+    margin:0 1vw;
+}
+
+.header__sell{
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    margin-left: 1vw;
+    padding:5px 15px;
+}
