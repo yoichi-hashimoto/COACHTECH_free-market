@@ -1,0 +1,24 @@
+@extends('layouts.simple')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('/css/login.css')}}">
+@endsection
+
+@section('content')
+<div class="login__items">
+    <form>
+    <h2 class="login__title">ログイン</h2>
+    <h3>メールアドレス 
+        <input type="text">
+    </h3>
+    <h3>パスワード 
+        <input type="text">
+    </h3>
+    <button class="login__button" >ログインする</button>
+
+<div class="registry__link">
+    <a href="{{asset('/registry')}}">会員登録はこちら</a>
+</div>
+</form>
+    </div>
+@endsection
