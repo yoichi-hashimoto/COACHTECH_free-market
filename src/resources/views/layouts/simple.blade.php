@@ -12,6 +12,11 @@
         <img class="header__img" src="{{ asset('images/logo.svg')}}">
     </header>  
     <main>
+        @if (session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+        @endif
     @yield('content')
     </main> 
 </body>

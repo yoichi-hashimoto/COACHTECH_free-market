@@ -15,9 +15,9 @@
             @csrf
             <input class="header__input" type="text" name="name" placeholder="なにをお探しですか？" >
         <nav class="links">
-            <li href="" class="header__login">ログアウト</li>
-            <li href="" class="header__mypage">マイページ</li>
-            <li href="" class="header__sell">出品</li>
+            <li><a href="{{ asset('/') }}" class="header__login">ログアウト</a></li>
+            <li><a href="{{ asset('/mypage') }}" class="header__mypage">マイページ</a></li>
+            <li><a href="{{ asset('sell') }}" class="header__sell">出品</a></li>
         </nav>
         </form>
         @endauth
@@ -28,14 +28,19 @@
             @csrf
             <input class="header__input" type="text" name="name" placeholder="なにをお探しですか？" >
         <nav class="links">
-            <li href="" class="header__login">ログイン</li>
-            <li href="" class="header__mypage">マイページ</li>
-            <li href="" class="header__sell">出品</li>
+            <li><a href="{{ asset('login')}}" class="header__login">ログイン</a></li>
+            <li><a href="{{ asset('login')}}" class="header__mypage">マイページ</a></li>
+            <li><a href="{{ asset('login')}}" class="header__sell">出品</a></li>
         </nav>
         </form>
         @endguest
     </header>
     <main>
+        @if (session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+        @endif
     @yield('content')
     </main> 
 </body>

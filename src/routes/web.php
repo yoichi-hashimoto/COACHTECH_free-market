@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,42 +14,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/', [UserController::class, 'index'])->name('index');
+
+Route::middleware('guest')->group(function(){
+
+    Route::get('/login',[UserController::class, 'showLoginForm'])->name('login.form');
+    Route::post('/login',[UserController::class, 'login'])
+        ->name('login')
+        ->middleware('throttle:login');
+
+    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.form');
+    Route::post('/register', [UserController::class, 'register'])->name('register');
 });
 
-Route::get('/mypage', function () {
-    return view('mypage');
-});
+Route::middleware('auth')->group(function(){
+    Route::get('/mypage', fn () 
+    => view('mypage'))->name('mypage');
 
-Route::get('/registry', function () {
-    return view('registry');
-});
+    Route::get('/mypage/profile', fn ()
+    => view('profile'));
 
-Route::get('/mypage/profile', function () {
-    return view('profile');
-});
+    Route::get('/detail', fn () 
+    =>view('detail'));
 
-Route::get('/login', function () {
-    return view('login');
-});
+    Route::get('/purchace', fn () 
+    => view('purchace'));
 
-Route::get('/detail', function () {
-    return view('detail');
-});
+    Route::get('/address', fn () 
+    => view('address'));
 
-Route::get('/purchace', function () {
-    return view('purchace');
-});
+    Route::get('/sell',fn()
+    => view('sell'));
 
-Route::get('/address', function () {
-    return view('address');
-});
+    Route::post('/logout',[UserController::class, 'logout'])->name('logout');
 
-Route::get('/sell',function(){
-    return view('sell');
-});
-
-Route::get('/auth',function(){
-    return view('auth');
-});
+    });

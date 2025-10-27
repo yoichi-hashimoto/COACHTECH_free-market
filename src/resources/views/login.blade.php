@@ -6,18 +6,25 @@
 
 @section('content')
 <div class="login__items">
-    <form>
+    <form action="/login" method="post">
+        @csrf
     <h2 class="login__title">ログイン</h2>
     <h3>メールアドレス 
-        <input type="text">
+        <input type="text" name="email" value="{{old('email')}}">
+        @error('email')
+        <p class="input__error--denger">{{ $message }}</p>
+        @enderror
     </h3>
     <h3>パスワード 
         <input type="text">
+        @error('password')
+        <p class="input__error--denger">{{ $message }}</p>
+        @enderror
     </h3>
-    <button class="login__button" >ログインする</button>
+    <button class="login__button" type="submit">ログインする</button>
 
-<div class="registry__link">
-    <a href="{{asset('/registry')}}">会員登録はこちら</a>
+<div class="register__link">
+    <a href="{{asset('/register')}}">会員登録はこちら</a>
 </div>
 </form>
     </div>
