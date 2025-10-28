@@ -8,7 +8,7 @@
     <form class="profile__input">
     <h2 class="profile__title">プロフィール設定</h2>
 <div class="profile__items">
-    <img src="/images/Tumbler+souvenir.jpg" alt="" class="profile__img">
+    <img src="{{ $user->avatar_path ? Storage::url($user->avatar_path) : asset('images/default-avatar.png') }}">
     <button href="" class="imgedit__button">画像を選択する</button>
 </div>
     <h3>ユーザー名 

@@ -6,7 +6,7 @@
 
 @section('content')
 <div class="login__items">
-    <form action="/login" method="post">
+    <form action="{{ route('login.perform')}}" method="post">
         @csrf
     <h2 class="login__title">ログイン</h2>
     <h3>メールアドレス 
@@ -16,7 +16,7 @@
         @enderror
     </h3>
     <h3>パスワード 
-        <input type="text">
+        <input type="text" name="password">
         @error('password')
         <p class="input__error--denger">{{ $message }}</p>
         @enderror

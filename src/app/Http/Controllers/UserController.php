@@ -59,4 +59,8 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('index');
     }
+
+    public function mypage(){
+        return view('mypage' , ['user' => Auth::user()]);
+    }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,21 +19,24 @@ Route::get('/', [UserController::class, 'index'])->name('index');
 
 Route::middleware('guest')->group(function(){
 
-    Route::get('/login',[UserController::class, 'showLoginForm'])->name('login.form');
+    Route::get('/login',[UserController::class, 'showLoginForm'])->name('login');
     Route::post('/login',[UserController::class, 'login'])
-        ->name('login')
-        ->middleware('throttle:login');
+        ->name('login.perform')
+        ->middleware('throttle:6,1');
 
-    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.form');
-    Route::post('/register', [UserController::class, 'register'])->name('register');
+    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [UserController::class, 'register'])->name('register.perform');
 });
 
 Route::middleware('auth')->group(function(){
-    Route::get('/mypage', fn () 
-    => view('mypage'))->name('mypage');
+
+    Route::get('/mypage', [UserController::class,'mypage'])->name('mypage');
 
     Route::get('/mypage/profile', fn ()
     => view('profile'));
+
+    Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/detail', fn () 
     =>view('detail'));
@@ -44,7 +48,7 @@ Route::middleware('auth')->group(function(){
     => view('address'));
 
     Route::get('/sell',fn()
-    => view('sell'));
+    => view('sell'))-> name('sell');
 
     Route::post('/logout',[UserController::class, 'logout'])->name('logout');
 
