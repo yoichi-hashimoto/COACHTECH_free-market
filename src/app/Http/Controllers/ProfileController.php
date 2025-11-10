@@ -15,8 +15,8 @@ class ProfileController extends Controller
         return view('profile', compact('user'));
     }
 
-public function update(ProfileRequest $request)
-{
+    public function update(ProfileRequest $request)
+    {
     $user = Auth::user();
 
     $validated = $request->validated();
@@ -34,4 +34,6 @@ public function update(ProfileRequest $request)
 
     return back()->with('message', 'プロフィールを更新しました');
     }
+
+
 }

@@ -1,4 +1,4 @@
-.grid{
+.grid {
     margin: 50px;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -9,87 +9,87 @@
         "area5 area6";
 }
 
-.purchace__product{
+.purchase__item {
     display: flex;
     border-bottom: 1px solid black;
     padding-bottom: 30px;
 }
 
-.purchace__product--detail h2{
-    margin:0px 40px 10px 40px;
+.purchase__item--detail h2 {
+    margin: 0px 40px 10px 40px;
 }
 
-.purchace__photo{
+.purchase__photo {
     width: 120px;
     height: 120px;
 }
 
-.purchace__payment{
+.purchase__payment {
     grid-area: area3;
     border-bottom: 1px solid black;
 }
 
-.purchace__payment--select{
-    margin:30px 0px 50px 60px;
+.purchase__payment--select {
+    margin: 30px 0px 50px 60px;
     width: 250px;
     font-size: 16px;
     border-radius: 3px;
     color: #5F5F5F;
 }
 
-.address__wrap{
+.address__wrap {
     grid-area: area5;
     border-bottom: 1px solid black;
 }
 
-.address__detail{
-    margin:40px;
+.address__detail {
+    margin: 40px;
 }
 
-.address__change{
+.address__change {
     grid-area: area5;
     text-align: right;
-    margin:20px;
+    margin: 20px;
     text-decoration: none;
 }
 
-.address__change a{
+.address__change a {
     text-decoration: none;
 }
 
-h3{
+h3 {
     padding: 0px 20px;
 }
 
-.paytype__grid{
+.paytype__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
     grid-template-areas:
-    "areaA areaB"
-    "areaC areaD"
+        "areaA areaB"
+        "areaC areaD"
     ;
     text-align: center;
     border: 1px solid black;
     margin: 0 40px;
 }
 
-.paytype__grid>div{
-    padding:20px;
+.paytype__grid>div {
+    padding: 20px;
 }
 
-.paytype__grid > div:nth-child(n + 3){
+.paytype__grid>div:nth-child(n + 3) {
     border-top: 1px solid black;
 }
 
-.purchace__area{
+.purchase__area {
     grid-area: area4;
     align-items: center;
     display: flex;
     padding: 40px;
 }
 
-.purchace__button{
+.purchase__button {
     width: 100%;
     height: 40px;
     font-size: 20px;

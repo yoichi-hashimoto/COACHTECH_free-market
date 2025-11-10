@@ -17,7 +17,13 @@
         @method('PUT')
     <h2 class="profile__title">プロフィール設定</h2>
 <div class="profile__items">
-    <img src="{{ $avatarUrl }}" alt="プロフィール画像" class="profile__img">
+    <div class="profile__img--wrapper">
+    @if($avatarUrl)
+    <img src="{{ $avatarUrl }}" alt="no image" class="profile__img">
+    @else
+    <span class="no-image-text">no image</span>
+    @endif
+    </div>
     <label class="imgedit__button">
         画像を選択する
         <input type="file" name="avatar" accept="image/jpeg,image/png" hidden>

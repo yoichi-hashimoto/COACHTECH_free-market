@@ -6,78 +6,33 @@
 
 
 @section('content')
+
     <div class="select__tab">
-        <a href="">おすすめ</a>
-        <a href="">マイリスト</a>
+        <a href="{{ route('index')}}">おすすめ</a>
+        <a href="{{ route('mylist',['keyword' =>request('keyword')]) }}">マイリスト</a>
     </div>
-    @auth
-    <div class="products__container">
-        <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
 
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
+<div class="items__container">
 
+@forelse($items as $item)   
 
-
+    <div class="item__img--wrap">
+        <a class="item__content" href="{{route('item', $item)}}">
+        <img src="{{ $item->avatar_path ? Storage::url($item->avatar_path) :asset('images/default-avatar.png') }}" alt="商品画像" class="item__img">
+            <p>{{ $item->name}}</p>
+        </a>
     </div>
-@endauth
+{{--
+        @if($item->is_sold)
+        <span class="sold">売り切れ</span>
+        @else
+        <span class="on-sale">販売中</span>
+        @endif
+--}}
 
-@guest
-        <div class="products__container">
-        <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
+@empty
+    <p>出品中の商品はありません</p>
+@endforelse
 
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
-
-
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
-
-
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
-
-
-                <div class="products__box">
-        <div class="products__photo">商品画像
-            <img src="" alt="">
-        </div>
-        <p class="products__name">商品名</p>
-        </div>
-
-
-@endguest
-
+</div>
 @endsection

@@ -15,8 +15,9 @@ class CreateLikesTable extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unique(['item_id','users_id']);
             $table->timestamps();
         });
     }
@@ -29,5 +30,8 @@ class CreateLikesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('likes');
+         Schema::table('items', function (Blueprint $table){
+            $table->dropColumn('likes_count');
+        });
     }
 }

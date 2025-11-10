@@ -15,9 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->foreignId('buyer_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->foreignId('seller_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->foreignId('address_id')->constrained('addresses')->onDelete('cascade');
             $table->unsignedInteger('subtotal');
             $table->enum('payment_method',['カード払い', 'コンビニ支払い'])->comment('支払い方法');

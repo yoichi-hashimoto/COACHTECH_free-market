@@ -19,7 +19,7 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->string('postal_code');
             $table->string('address');
-            $table->string('building');
+            $table->string('building')->nullable();
             $table->timestamps();
         });
     }

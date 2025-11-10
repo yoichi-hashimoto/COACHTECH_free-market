@@ -9,18 +9,21 @@
 </head>
 <body>
     <header class="header">
-        <img class="header__img" src="{{ asset('images/logo.svg')}}">
-        <form class="header__search" action="" method="GET">
-            <input class="header__input" type="text" name="name" placeholder="なにをお探しですか？" >
+        <a href="{{route('index')}}">
+            <img class="header__img" src="{{ asset('images/logo.svg')}}">
+        </a>
+        <form class="header__search" action="{{ url()->current() }}" method="GET">
+            @csrf
+            <input class="header__input" type="text" name="keyword" value="{{ old( 'keyword')}}" placeholder="なにをお探しですか？" >
         </form>
         <nav class="links">
             <ul class="links__list">
             @auth
             <li>
-            <form action="{{ route('logout')}}" method="POST">
+        <form action="{{ route('logout')}}" method="POST">
             @csrf
                 <button type="submit" class="header__logout">ログアウト</button>
-            </form>
+        </form>
             <li><a href="{{ route('mypage') }}" class="header__mypage">マイページ</a></li>
             <li><a href="{{ route('sell') }}" class="header__sell">出品</a></li>
             @endauth

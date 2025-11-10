@@ -9,7 +9,9 @@
 </head>
 <body>
     <header class="header">
-        <img class="header__img" src="{{ asset('images/logo.svg')}}">
+        <a href="{{ route('index')}}">
+            <img class="header__img" src="{{ asset('images/logo.svg')}}">
+        </a>
     </header>  
     <main>
         @if (session('message'))
