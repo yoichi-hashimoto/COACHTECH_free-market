@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
@@ -27,9 +28,12 @@ class ItemController extends Controller
             ->latest()
             ->first();
 
-        $user = auth()->user();
+        $user=auth()->user();
+        $avatarUrl = $user && $user->avatar_path
+        ? Storage::url($user->avatar_path)
+        : asset('images/default-avatar.png');
 
-        return view('item', compact('item','categories','liked','latestComment','user'))
+        return view('item', compact('item','categories','liked','latestComment','avatarUrl'))
             ->with('categories', $item->categories);
     }
 }

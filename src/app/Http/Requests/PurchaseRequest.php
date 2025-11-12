@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class PurchaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,16 @@ class OrderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            '' => '',
-            '' => '',
-            '' => '',
-            '' => '',
+        return 
+        [
+            'payment_method' => ['required','in:カード払い,コンビニ支払い'],
+        ];
+    }
+
+    public function message(){
+        return
+        [
+            'payment_method.required' => '支払い方法を選択してください'
         ];
     }
 }

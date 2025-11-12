@@ -22,6 +22,7 @@
 .purchase__photo {
     width: 120px;
     height: 120px;
+    object-fit: cover;
 }
 
 .purchase__payment {
@@ -64,12 +65,13 @@ h3 {
 .paytype__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-auto-rows: auto;
+    grid-auto-rows: 80px 80px;
     grid-template-areas:
         "areaA areaB"
         "areaC areaD"
     ;
     text-align: center;
+    align-items: center;
     border: 1px solid black;
     margin: 0 40px;
 }
@@ -78,8 +80,8 @@ h3 {
     padding: 20px;
 }
 
-.paytype__grid>div:nth-child(n + 3) {
-    border-top: 1px solid black;
+.paytype__grid>div:nth-child(-n+2) {
+    border-bottom: 1px solid black;
 }
 
 .purchase__area {
@@ -128,3 +130,4 @@ h3 {
     color: #666;
     font-size: 12px;
 }
+

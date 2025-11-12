@@ -49,15 +49,11 @@ Route::middleware('auth')->group(function(){
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::get('/detail', fn () 
-    =>view('detail'));
 
+    Route::get('/purchase/{item_id}', [PurchaseController::class,'show'])->name('purchase');
 
-    Route::get('/purchase', [PurchaseController::class,'address'])->name('purchase');
-
-
-    Route::get('/address', fn () 
-    => view('address'));
+    Route::get('/address', [PurchaseController::class,'edit'])->name('address.edit');
+    Route::post('/address', [PurchaseController::class,'update'])->name('address.update');
 
     Route::get('/sell', [ExhibitionController::class, 'create'])->name('sell');
     Route::post('/sell', [ExhibitionController::class, 'store'])->name('sell.store');

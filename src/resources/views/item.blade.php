@@ -56,7 +56,7 @@
     </div>
 </div>
 
-    <a href="{{ route('purchase')}}">
+    <a href="{{ route('purchase', ['item_id'=>$item->id])}}">
         <button class="purchase__button"> 購入手続きへ</button>
     </a>
     <h2>商品説明</h2>
@@ -81,7 +81,7 @@
         <h2>コメント({{ $item->comments_count }})</h2>
         @if($latestComment)
         <div class="user__wrap">
-            <img src="{{ $latestComment->user->avatarUrl }}" alt="" class="comment__user">
+            <img src="{{ $avatarUrl }}" alt="" class="comment__user">
             <h3>{{ $latestComment->user->name }}</h3>
         </div>
             <p class="comment__box">{{ $latestComment->comment }}</p>
