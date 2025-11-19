@@ -10,14 +10,7 @@
 <h2 class="sell__title">商品の出品</h2>
 <div class="sell__img">
     <h3>商品画像</h3>
-@php
-    $item = $item ?? null;
-    $avatarUrl=($item && $item->avatar_path)
-        ? \Illuminate\Support\Facades\Storage::url($item->avatar_path)
-        :asset('image/default-avatar.png');
-@endphp
     <img src="{{ $avatarUrl }}" alt="商品画像" id='preview' class="sell__img--preview">
-
     <label class="sell__img--button">
         <input type="file" id="avatar" name="avatar" accept="image/jpeg,image/png"  hidden>画像を選択する
     </label>
@@ -31,9 +24,6 @@
   <div class="field">
     <h3 class="field__label">カテゴリー</h3>
     <div class="chip-group">
-  @php
-    $oldCats = old('category', []);
-  @endphp
   
   @foreach($categories as $cat)
     <input type="checkbox"
@@ -41,7 +31,7 @@
            id="cat-{{ $cat->id }}"
            value="{{ $cat->id }}"
            class="chip-input"
-           {{ in_array($cat, $oldCats, true) ? 'checked' : '' }}>
+           {{ in_array($cat->id, old('category', [], true)) ? 'checked' : '' }}>
     <label for="cat-{{ $cat->id }}" class="chip">{{ $cat->name }}</label>
   @endforeach
     </div>
@@ -73,14 +63,13 @@
     @error('name')
         <p>{{ $message}}</p>
     @enderror
-
     <h3>ブランド名</h3>
         <input class="section__item" type="text" name="brand" value="{{old('brand')}}">
     @error('brand')
         <p>{{ $message}}</p>
     @enderror
     <h3>商品の説明</h3>
-        <input class="section__item--detail" type="text" name="description" value="{{old('description')}}">
+        <textarea class="section__item--detail" name="description">{{old('description')}}</textarea>
     @error('description')
         <p>{{ $message}}</p>
     @enderror
@@ -91,21 +80,19 @@
     @enderror
     </div>
 </section>
-
     <button type="submit" class="sell__button" >出品する</button>
 </form>
 
 
 <script>
 document.getElementById('avatar').addEventListener('change', function(e) {
-  const file = e.target.files[0];          // 選ばれたファイルを取得
-  if (!file) return;                       // ファイルが無ければ終了
-
-  const reader = new FileReader();         // FileReaderというブラウザの機能を使う
-  reader.onload = function(event) {        // 読み込みが完了したら…
-    document.getElementById('preview').src = event.target.result; // <img>のsrcを書き換え
+  const file = e.target.files[0];          
+  if (!file) return;                       
+  const reader = new FileReader();         
+  reader.onload = function(event) {        
+    document.getElementById('preview').src = event.target.result; 
   };
-  reader.readAsDataURL(file);              // 画像データを読み込む
+  reader.readAsDataURL(file);             
 });
 </script>
 

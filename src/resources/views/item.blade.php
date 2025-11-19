@@ -27,7 +27,7 @@
 <div>
     <h1>{{ $item->name}}</h1>
     <p>{{ $item->brand }}</p>
-    <h2>{{ $item->price}}(税込)</h2>
+    <h2>¥{{ $item->price}}(税込)</h2>
 
 <div class="star-comment__wrap">
 <form action="{{route('item.like', $item)}}" method="POST" >
@@ -66,17 +66,16 @@
     <div class="category__wrap">
     <h3 class="category__title">カテゴリー</h3>
 
-@php
-  $items = $items ?? collect();
-@endphp
-
+    <ul class="category__items--wrap">
     @foreach($categories as $category)
         <li class="category__items">{{ $category->name }}</li>
     @endforeach
-    <h3 class="condition__title">商品の状態</h3>
+    </ul>
+        </div>
+    <div class="condition__title">
+    <h3 >商品の状態</h3>
         <p class="condition">{{ $item->condition }}</p>
     </div>
-
     <div class="comment__wrap">
         <h2>コメント({{ $item->comments_count }})</h2>
         @if($latestComment)

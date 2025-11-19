@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class PurchaseRequest extends FormRequest
 {
@@ -25,14 +26,18 @@ class PurchaseRequest extends FormRequest
     {
         return 
         [
-            'payment_method' => ['required','in:カード払い,コンビニ支払い'],
+        'item_id'        => ['required','integer','exists:items,id'],
+        'address_id'     => ['required','integer','exists:addresses,id'],
+        'payment_method' => ['required', Rule::in(['カード支払い','コンビニ払い'])],
+        'subtotal'       => ['required','integer','min:1'],
         ];
     }
 
-    public function message(){
+    public function messages(){
         return
         [
-            'payment_method.required' => '支払い方法を選択してください'
+            'payment_method.required' => '支払い方法を選択してください',
+            'payment_method.in' => '支払い方法を選択してください',
         ];
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MailController;
+use App\Http\Middleware\EmailVerified;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,7 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/item/{item}',[ItemController::class,'show'])->name('item');
+Route::get('/auth',[MailController::class,'showAuth'])->name('auth');
 
 
 Route::middleware('guest')->group(function(){
@@ -37,7 +40,15 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
+    Route::post('/auth/check',[MailController::class,'check'])->name('auth.check');
+    Route::get('/auth/verify/{token}',[MailController::class,'verify'])->name('auth.verify');
+    Route::post('/auth/resend',[MailController::class,'resend'])->name('auth.resend')->middleware('throttle:3,1');
+    Route::post('/logout',[UserController::class, 'logout'])->name('logout');
+    });
 
+Route::middleware('auth','verified_email')->group(function(){
+
+    Route::get('/home', [UserController::class, 'indexMember'])->name('home');
     Route::get('/mylist', [UserController::class, 'mylist'])->name('mylist');
 
     Route::get('/mypage', [UserController::class,'mypage'])->name('mypage');
@@ -51,18 +62,16 @@ Route::middleware('auth')->group(function(){
 
 
     Route::get('/purchase/{item_id}', [PurchaseController::class,'show'])->name('purchase');
+    Route::post('/purchase',[PurchaseController::class,'store'])->name('purchase.store');
 
     Route::get('/address', [PurchaseController::class,'edit'])->name('address.edit');
     Route::post('/address', [PurchaseController::class,'update'])->name('address.update');
 
     Route::get('/sell', [ExhibitionController::class, 'create'])->name('sell');
     Route::post('/sell', [ExhibitionController::class, 'store'])->name('sell.store');
-    Route::get('/sell/{item}/edit', [ExhibitionController::class, 'edit'])->name('sell.edit');
-    Route::put('/sell/{item}',      [ExhibitionController::class, 'update'])->name('sell.update');
+    // Route::put('/sell/{item}',      [ExhibitionController::class, 'update'])->name('sell.update');
 
     Route::post('/item/{item}/like',[LikeController::class,'toggle'])->name('item.like');
     Route::post('/item/{item}/comment',[CommentController::class,'store'])->name('comment.store');
-
-    Route::post('/logout',[UserController::class, 'logout'])->name('logout');
 
     });

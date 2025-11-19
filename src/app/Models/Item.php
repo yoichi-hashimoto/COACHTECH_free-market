@@ -34,6 +34,8 @@ class Item extends Model
 
     public function comments(){return $this->hasMany(Comment::class);}
 
+    public function purchases(){return $this->hasOne(Purchase::class);}
+
     public function getAvatarUrlAttribute():string{
         return $this->avatar_path
         ? \Storage::url($this->avatar_path)

@@ -11,8 +11,4 @@ class Category extends Model
 
     protected $fillable = ['name', 'sort'];
 
-    public function items()
-    {
-        return $this->belongsToMany(Item::class)->withTimestamps();
-    }
 }

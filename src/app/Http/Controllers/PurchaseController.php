@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Address;
 use App\Models\User;
 use App\Models\Item;
+use App\Models\Purchase;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
@@ -19,14 +21,12 @@ class PurchaseController extends Controller
             ->address()
             ->latest()
             ->first();
-        if(is_null($address)){
-            $address=(object)[
-            'postal_code'=>'000-0000',
-            'address'=>'住所登録がありません',
-            'building'=>'-',
-        ];}
-
         $item = Item::findOrFail($item_id);
+        // if(is_null($address)){
+        //     return redirect()
+        //     ->route('address.edit',['item_id'=>$item->id])
+        //     ->with('message','住所登録をしてください');
+        // }
 
         return view ('purchase',compact('address','item'));
     }
@@ -49,4 +49,12 @@ class PurchaseController extends Controller
         return redirect()->route('purchase',['item_id'=>$returnId])->with('message','住所が更新されました');
     }
 
+
+    public function store(PurchaseRequest $request){
+        $validated = $request->validated();
+        $validated['user_id']=Auth::id();
+        $item = Item::findOrFail($validated['item_id']);
+        Purchase::create($validated);
+        return redirect()->route('index')->with('message','購入しました');
+    }
 }

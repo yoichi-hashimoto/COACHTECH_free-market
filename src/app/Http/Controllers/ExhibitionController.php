@@ -11,12 +11,18 @@ use App\Models\Category;
 
 class ExhibitionController extends Controller
 {
+
     public function create(){
         $categories = Category::orderBy('id')->get(['id','name']);
-        return view('sell',compact('categories'));
+        $item = $item ?? null;
+        $avatarUrl=($item && $item->avatar_path)
+        ? \Illuminate\Support\Facades\Storage::url($item->avatar_path)
+        :'';
+        return view('sell',compact('categories','avatarUrl'));
     }
 
     public function store(ExhibitionRequest $request){
+        
         $validated = $request->validated(); 
 
         $item = new item();
@@ -35,7 +41,6 @@ class ExhibitionController extends Controller
             $item->avatar_path=$path;
             $item->save();
         }
-
         if(!empty($validated['category'])){
             $item->categories()->sync($validated['category']);
         }
@@ -43,31 +48,31 @@ class ExhibitionController extends Controller
     return redirect()->back()->with('message', '製品情報を登録しました');
     }
 
-    public function update(ExhibitionRequest $request, item $item){
+    // public function update(ExhibitionRequest $request, item $item){
 
-        abort_if($item->user_id !== Auth::id(), 403);
+    //     abort_if($item->user_id !== Auth::id(), 403);
 
-        $validated = $request -> validated();
+    //     $validated = $request -> validated();
 
-        if($request->hasFile('avatar')){
-            if($item->avatar_path && Storage::disk('public')->exists($item->avatar_path)){
-                Storage::disk('public')->delete($item->avatar_path);
-            }
-            $path=$request->file('avatar')->store("avatars/$item->id","public");
-            $item->avatar_path=$path;
-        }
-            $item->fill([
-            'name'        => $validated['name'],
-            'condition'   => $validated['condition'],
-            'brand'       => $validated['brand'] ?? null,
-            'detail'      => $validated['detail'],
-            'price'       => $validated['price'],
-            ])->save();
+    //     if($request->hasFile('avatar')){
+    //         if($item->avatar_path && Storage::disk('public')->exists($item->avatar_path)){
+    //             Storage::disk('public')->delete($item->avatar_path);
+    //         }
+    //         $path=$request->file('avatar')->store("avatars/$item->id","public");
+    //         $item->avatar_path=$path;
+    //     }
+    //         $item->fill([
+    //         'name'        => $validated['name'],
+    //         'condition'   => $validated['condition'],
+    //         'brand'       => $validated['brand'] ?? null,
+    //         'detail'      => $validated['detail'],
+    //         'price'       => $validated['price'],
+    //         ])->save();
 
-            if(!empty($validated['category'])){
-                $item->categories()->sync($validated['category']);
-            }
+    //         if(!empty($validated['category'])){
+    //             $item->categories()->sync($validated['category']);
+    //         }
 
-        return back()->with('message', '商品情報を登録しました');
-    }
+    //     return back()->with('message', '商品情報を登録しました');
+    // }
     }

@@ -5,6 +5,11 @@
 @endsection
 
 @section('content')
+@if($errors->any())
+    <div class="login-error">
+        {{ $errors->first() }} 
+    </div>
+@endif
 <div class="login__items">
     <form action="{{ route('login.perform')}}" method="post">
         @csrf
