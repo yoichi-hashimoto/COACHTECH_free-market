@@ -1,3 +1,5 @@
 docker/mysql/data/
 /vendor
 /src/vendor
+/vendor
+/src/vendor
