@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <form class="profile__input">
+<form class="profile__input">
     <h2 class="profile__title">プロフィール設定</h2>
 <div class="profile__items">
     <img src="{{ $user->avatar_path ? Storage::url($user->avatar_path) : asset('images/default-avatar.png') }}">

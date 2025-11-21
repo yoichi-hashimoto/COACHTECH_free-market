@@ -17,21 +17,20 @@
 @forelse($items as $item)   
 
     <div class="item__img--wrap">
+        @if($item->purchases_count > 0)
+        <img src="{{ $item->avatar_path ? Storage::url($item->avatar_path) :asset('images/default-avatar.png') }}" alt="商品画像" class="item__img">
+        <p>{{ $item->name}}</p>
+        <span class="sold">SOLD</span>
+        @else
         <a class="item__content" href="{{route('item', $item)}}">
         <img src="{{ $item->avatar_path ? Storage::url($item->avatar_path) :asset('images/default-avatar.png') }}" alt="商品画像" class="item__img">
             <p>{{ $item->name}}</p>
+            @endif
         </a>
     </div>
-{{--
-        @if($item->is_sold)
-        <span class="sold">売り切れ</span>
-        @else
-        <span class="on-sale">販売中</span>
-        @endif
---}}
 
 @empty
-    <p>出品中の商品はありません</p>
+    <p>マイリストの商品はありません</p>
 @endforelse
 
 </div>

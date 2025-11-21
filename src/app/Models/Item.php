@@ -32,6 +32,10 @@ class Item extends Model
         return $this->belongsToMany(User::class,'likes','item_id','user_id')->withTimestamps();
     }
 
+    public function purchases(){
+        return $this->hasMany(Purchase::class);
+    }
+
     public function comments(){return $this->hasMany(Comment::class);}
 
     public function getAvatarUrlAttribute():string{

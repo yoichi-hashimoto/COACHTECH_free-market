@@ -10,7 +10,6 @@ class Address extends Model
 {
     use HasFactory;
     protected $fillable =[
-        'user_id',
         'postal_code',
         'address',
         'building'
@@ -19,4 +18,9 @@ class Address extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->withtimestamps();    }
+
+    public function purchase()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

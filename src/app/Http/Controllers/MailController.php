@@ -14,6 +14,22 @@ class MailController extends Controller
         return view('auth');
     }
 
+    public function sendAuth(Request $request){
+    $user = User::where('email', $request->email)->firstOrFail();
+    $token = Str::random(64);
+    $user->email_token = $token;
+    $user->save();
+    Mail::to($request->email)->send(new AuthMail($user, $token));
+        if(count(Mail::failures())>0){
+            $message = 'メール送信に失敗しました';
+            return back() ->withErrors($message);
+        }
+        else{
+            $message = 'メールを送信しました';
+            return redirect()->route('auth.show')->with(compact('message'));
+        }
+    }
+
     public function verify($token){
         $user = User::where('email_token', $token)->first();
 

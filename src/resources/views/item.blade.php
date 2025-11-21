@@ -23,11 +23,10 @@
     <img src="{{ Storage::url($item->avatar_path ?? 'images/default-avatar.png') }}" alt="" class="item__photo">
 </div>
 
-
 <div>
     <h1>{{ $item->name}}</h1>
     <p>{{ $item->brand }}</p>
-    <h2>{{ $item->price}}(税込)</h2>
+    <h2>¥{{ $item->price}}(税込)</h2>
 
 <div class="star-comment__wrap">
 <form action="{{route('item.like', $item)}}" method="POST" >
@@ -56,7 +55,7 @@
     </div>
 </div>
 
-    <a href="{{ route('purchase')}}">
+    <a href="{{ route('purchase.show', ['item_id'=>$item->id])}}">
         <button class="purchase__button"> 購入手続きへ</button>
     </a>
     <h2>商品説明</h2>
@@ -66,22 +65,21 @@
     <div class="category__wrap">
     <h3 class="category__title">カテゴリー</h3>
 
-@php
-  $items = $items ?? collect();
-@endphp
-
+    <ul class="category__items--wrap">
     @foreach($categories as $category)
         <li class="category__items">{{ $category->name }}</li>
     @endforeach
-    <h3 class="condition__title">商品の状態</h3>
+    </ul>
+        </div>
+    <div class="condition__title">
+    <h3 >商品の状態</h3>
         <p class="condition">{{ $item->condition }}</p>
     </div>
-
     <div class="comment__wrap">
         <h2>コメント({{ $item->comments_count }})</h2>
         @if($latestComment)
         <div class="user__wrap">
-            <img src="{{ $latestComment->user->avatarUrl }}" alt="" class="comment__user">
+            <img src="{{ $avatarUrl }}" alt="" class="comment__user">
             <h3>{{ $latestComment->user->name }}</h3>
         </div>
             <p class="comment__box">{{ $latestComment->comment }}</p>

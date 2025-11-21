@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-<<<<<<< Updated upstream
-use App\Models\Address;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-=======
 use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
@@ -16,26 +11,47 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
->>>>>>> Stashed changes
 
 class PurchaseController extends Controller
 {
-    public function purchase(){
-        return view ('purchase');
-    }
 
-    public function address(){
+    public function show($item_id){
         $user = Auth::user();
         $address = $user
             ->address()
             ->latest()
             ->first();
-<<<<<<< Updated upstream
-=======
+            
         $item = Item::findOrFail($item_id);
->>>>>>> Stashed changes
 
-        return view ('purchase',compact('address'));
+        return view ('purchase',compact('address','item'));
+    }
+
+    public function edit(Request $request){
+        $address = Auth::user()->address()->first();
+        $itemId = $request->query('item_id');
+        return view ('address',compact('address','itemId'));
+    }
+
+    public function update(AddressRequest $request){
+        $validated = $request->validated();
+        $user = Auth::user();
+        $address = Arr::only($validated,['postal_code','address','building']);
+        $user->address()->updateOrCreate(
+        ['user_id' => $user->id],
+        $address
+        );
+        $returnId = $request->input('return_item_id');
+        return redirect()->route('purchase.show',['item_id'=>$returnId])->with('message','住所が更新されました');
+    }
+
+
+    public function store(PurchaseRequest $request){
+        $validated = $request->validated();
+        $validated['user_id']=Auth::id();
+        $item = Item::findOrFail($validated['item_id']);
+        Purchase::create($validated);
+        return redirect()->route('index')->with('message','購入しました');
     }
 
     public function success(Request $request){

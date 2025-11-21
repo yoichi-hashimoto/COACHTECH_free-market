@@ -43,35 +43,4 @@ class ExhibitionController extends Controller
     return redirect()->back()->with('message', '製品情報を登録しました');
     }
 
-<<<<<<< Updated upstream
-    public function update(ExhibitionRequest $request, item $item){
-
-        abort_if($item->user_id !== Auth::id(), 403);
-
-        $validated = $request -> validated();
-
-        if($request->hasFile('avatar')){
-            if($item->avatar_path && Storage::disk('public')->exists($item->avatar_path)){
-                Storage::disk('public')->delete($item->avatar_path);
-            }
-            $path=$request->file('avatar')->store("avatars/$item->id","public");
-            $item->avatar_path=$path;
-        }
-            $item->fill([
-            'name'        => $validated['name'],
-            'condition'   => $validated['condition'],
-            'brand'       => $validated['brand'] ?? null,
-            'detail'      => $validated['detail'],
-            'price'       => $validated['price'],
-            ])->save();
-
-            if(!empty($validated['category'])){
-                $item->categories()->sync($validated['category']);
-            }
-
-        return back()->with('message', '商品情報を登録しました');
-    }
-    }
-=======
 }
->>>>>>> Stashed changes

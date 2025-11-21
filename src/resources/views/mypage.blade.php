@@ -12,8 +12,8 @@
         <a href="{{ route('profile.edit')}}" type="submit" class="edit__button">プロフィールを編集</a>
 </div>
     <div class="select__tab">
-        <a href="">出品した商品</a>
-        <a href="">購入した商品</a>
+        <a href="{{route('mypage',['page'=>'sell'])}}">出品した商品</a>
+        <a href="{{route('mypage',['page'=>'buy'])}}">購入した商品</a>
     </div>
 
 <div class="items__container">
@@ -28,17 +28,9 @@
             <p>{{ $result->name}}</p>
         </a>
     </div>
-{{--
-        @if($item->is_sold)
-        <span class="sold">売り切れ</span>
-
-        @else
-        <span class="on-sale">販売中</span>
-        @endif
---}}
 
 @empty
-    <p>出品中の商品はありません</p>
+    <p>該当する商品はありません</p>
 @endforelse
 
 @else
@@ -46,22 +38,17 @@
 @forelse($items as $item)
 
     <div class="item__img--wrap">
-        <a class="item__content" href="{{route('item', $item)}}">
-            <img src="{{ $avatarPaths [$item->id] }}" alt="{{ $item->name }}" class="item__img">
+        <div class="item__content">
+            <img src="{{ Storage::url($item->avatar_path) }}" alt="{{ $item->name }}" class="item__img">
             <p>{{ $item->name}}</p>
-        </a>
+            @if($item->purchases_count > 0)
+            <span class="sold">SOLD</span>
+            @endif
+        </div>
     </div>
-{{--
-        @if($item->is_sold)
-        <span class="sold">売り切れ</span>
-
-        @else
-        <span class="on-sale">販売中</span>
-        @endif
---}}
 
 @empty
-    <p>出品中の商品はありません</p>
+    <p>該当する商品はありません</p>
 @endforelse
 </div>
 

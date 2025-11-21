@@ -5,28 +5,22 @@
 @endsection
 
 @section('content')
-@php
-  $user = $user ?? auth()->user();
-  $avatarUrl = ($user && $user->avatar_path)
-      ? \Illuminate\Support\Facades\Storage::url($user->avatar_path)
-      : asset('images/default-avatar.png');
-@endphp
 
-    <form class="profile__input"  action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
+<form class="profile__input"  action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
     <h2 class="profile__title">プロフィール設定</h2>
 <div class="profile__items">
     <div class="profile__img--wrapper">
     @if($avatarUrl)
-    <img src="{{ $avatarUrl }}" alt="no image" class="profile__img">
+    <img src="{{ $avatarUrl }}" id="avatarPreview" alt="no image" class="profile__img">
     @else
-    <span class="no-image-text">no image</span>
+    <img id="avatarPreview" src="asset('images/default-avatar.png'" alt="画像プレビュー">
     @endif
     </div>
     <label class="imgedit__button">
         画像を選択する
-        <input type="file" name="avatar" accept="image/jpeg,image/png" hidden>
+        <input id="avatar" type="file" name="avatar" accept="image/jpeg,image/png" hidden>
     </label>
     @error('avatar')
       <p class="error">{{ $message }}</p>
@@ -39,21 +33,38 @@
     @enderror
     </h3>
     <h3>郵便番号 
-        <input type="text" name="postal_code" value="{{ old('postal_code', $user->postal_code)}}" placeholder="123-4567">
+        <input type="text" name="postal_code" value="{{ old('postal_code', $addr->postal_code ?? '')}}" placeholder="123-4567">
     @error('postal_code')
       <p class="error">{{ $message }}</p>
     @enderror
     </h3>
     <h3>住所
-        <input type="text" name="address" value="{{ old('address' , $user->address)}}">
+        <input type="text" name="address" value="{{ old('address' , $addr->address ?? '')}}">
     @error('address')
       <p class="error">{{ $message }}</p>
     @enderror
     </h3>
     <h3>建物名
-        <input type="text" name="building" value="{{ old('building', $user->building)}}">
+        <input type="text" name="building" value="{{ old('building', $addr->building ?? '')}}">
     </h3>
     <button type="submit" class="update__button" >更新する</button>
 
 </form>
+
+<script>
+  document.getElementById('avatar').addEventListener('change',function(event){
+    const file = event.target.files[0];
+        if (!file) return;
+    const reader = new FileReader();
+    reader.onload =function(event){
+      const imgElement = document.getElementById('avatarPreview');
+      imgElement.src = event.target.result;
+      imgElement.style.display='block';
+    };
+    if(file){
+      reader.readAsDataURL(file);
+    };
+  });
+</script>
+
 @endsection

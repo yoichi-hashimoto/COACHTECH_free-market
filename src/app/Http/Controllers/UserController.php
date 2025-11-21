@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Item;
-<<<<<<< Updated upstream
 use App\Models\Like;
-=======
 use App\Models\Purchase;
 use App\Mail\AuthMail;
->>>>>>> Stashed changes
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -21,6 +20,7 @@ class UserController extends Controller
     public function index(Request $request){
         $keyword = $request->input('keyword'); 
         $base = Item::query()
+        ->withCount('purchases')
         ->with(['categories','user'])
         ->when(Auth::check(), function($query)
         {
@@ -39,13 +39,11 @@ class UserController extends Controller
     public function mylist(Request $request)
     {
         $keyword=trim($request->input('keyword',''));
-        $base=Item::query()
-        ->when(Auth::check(),function($query)
-        {
-            return $query->where('user_id','!=',Auth::id());
-        });
-        $items = Auth::user()
-        ->likes()
+     
+        $items = Item::withCount('purchases')
+        ->whereHas('followers',function ($query){
+            $query->where('user_id',Auth::id());
+        })
         ->when(!empty ($keyword),function ($query) use ($keyword)
             {
             return $query-> where('name','like',"%{$keyword}%");
@@ -72,6 +70,11 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)){
             $request->session()->regenerate();
+            $user = Auth::user();
+            if(is_null($user->email_verified_at)){
+                $message = 'メール認証が完了していません。認証メールをご確認ください。';
+                return redirect()->route('auth')->withErrors($message);
+            }
             return redirect()->intended('/mypage');
         }
 
@@ -87,17 +90,18 @@ class UserController extends Controller
 
     public function register(RegisterRequest $request){
         $validated = $request->validated();
-
+        $token = Str::random(64);
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
+            'email_token' => $token,
         ]);
 
     Auth::login($user);
+    Mail::to($user->email)->send(new AuthMail($user, $token));
 
-    return redirect()->route('mypage')->with('message','登録が完了しました！');
-
+    return redirect()->route('verification.notice');
     }
 
     public function logout(Request $request)
@@ -117,15 +121,6 @@ class UserController extends Controller
         ? Storage::url($user->avatar_path)
         : asset('images/default-avatar.png');
 
-<<<<<<< Updated upstream
-        $base = Item::query()
-        ->where('user_id',$user->id)
-        ->with(['categories'])
-        ->latest();
-
-        $items = $base->get();
-
-=======
         $page = $request->query('page','sell');
         if($page === 'buy'){
             $purchaces = Purchase::with('item')
@@ -135,7 +130,6 @@ class UserController extends Controller
             $items = Item::query()
             ->where('user_id',Auth::id())->get();
         }
->>>>>>> Stashed changes
         $avatarPaths = [];
         foreach ($items as $it) {
         $avatarPaths[$it->id] = $it->avatar_path
@@ -144,18 +138,11 @@ class UserController extends Controller
         
         $keyword = $request->input('keyword');
 
-<<<<<<< Updated upstream
-        $results = (clone $base)
-        ->where('name', 'like',"%{$keyword}%")
-=======
         $results = Item::query()
         ->when($keyword !== '', function($query)use($keyword){
         $query->where('name', 'like',"%{$keyword}%");})
->>>>>>> Stashed changes
         ->get();
 
-    return view('mypage', compact('user', 'avatarUrl', 'items', 'avatarPaths','results','keyword'));
+    return view('mypage', compact('user', 'avatarUrl', 'items', 'avatarPaths','results','keyword','page'));
 }
-
-
 }

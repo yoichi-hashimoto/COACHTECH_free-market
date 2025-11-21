@@ -6,13 +6,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProfileRequest;
+use Illuminate\Support\Arr;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
         $user = Auth::user();
-        return view('profile', compact('user'));
+        $addr = $user->address()->first();
+        $avatarUrl = $user->avatar_path
+        ? Storage::url($user->avatar_path)
+        : asset('images/default-avatar.png');
+        return view('profile', ['user'=>$user,'addr'=>$addr,'avatarUrl'=>$avatarUrl,]);
     }
 
     public function update(ProfileRequest $request)
@@ -25,21 +30,11 @@ class ProfileController extends Controller
         $path = $request->file('avatar')->store("avatars/{$user->id}", 'public');
         $user->avatar_path = $path;
         }
-
-<<<<<<< Updated upstream
-    $user->name        = $validated['name'];
-    $user->postal_code = $validated['postal_code'];
-    $user->address     = $validated['address'];
-    $user->building    = $validated['building'];
-    $user->save();
-=======
     $user->name = $validated['name'];
     $user->save();
     $address = Arr::only($validated,['postal_code','address','building']);
     $user->address()->updateOrCreate(['user_id' => $user->id],$address);
->>>>>>> Stashed changes
-
-    return back()->with('message', 'プロフィールを更新しました');
+    return redirect()->route('mypage')->with('message', 'プロフィールを更新しました');
     }
 
 
