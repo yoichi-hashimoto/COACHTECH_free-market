@@ -42,7 +42,7 @@ class MailController extends Controller
             return redirect()->route('profile.edit')->with(compact('message'));
         } else {
             $message = '無効な認証リンクです。もう一度認証メールを送信してください。';
-            return redirect()->route('auth')->withErrors($message);
+            return redirect()->route('verification.notice')->withErrors($message);
         }
     }
 
@@ -50,6 +50,8 @@ class MailController extends Controller
         $user = $request->user();
         if ($user->email_verified_at !== null){
             return redirect()->route('profile.edit');
+        }else{
+            return redirect()->route('verification.notice')->withErrors('メール認証が完了していません。認証メールをご確認ください。');
         }
     }
 
@@ -65,6 +67,6 @@ class MailController extends Controller
         Mail::to($user->email)->send(
             new AuthMail($user, $token)
         );
-        return redirect()->route('auth')->with('message', '認証メールを再送しました。');
+        return redirect()->route('verification.notice')->with('message', '認証メールを再送しました。');
     }
 }

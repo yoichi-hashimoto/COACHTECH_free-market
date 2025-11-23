@@ -7,7 +7,7 @@
 @section('content')
 
 <div class="users__box">
-    <img src="{{ $avatarUrl }}" alt="ユーザー画像" class="users__img">
+    <img src="{{ $avatarUrl }}" alt="ユーザー画像が登録されていません" class="users__img">
         <h2 class="users__name">{{ $user->name}}</h2>
         <a href="{{ route('profile.edit')}}" type="submit" class="edit__button">プロフィールを編集</a>
 </div>
@@ -25,7 +25,10 @@
     <div class="item__img--wrap">
         <a class="item__content" href="{{route('item', $result)}}">
             <img src="{{ $result->avatar_path ? Storage::url($result->avatar_path) :asset('images/default-avatar.png') }}" alt="{{ $result->name }}" class="item__img">
-            <p>{{ $result->name}}</p>
+            <div class="item__detail">
+                <p>{{ $result->name}}</p>
+                <p>￥{{ $result->price}}</p>
+            </div>
         </a>
     </div>
 
@@ -40,7 +43,10 @@
     <div class="item__img--wrap">
         <div class="item__content">
             <img src="{{ Storage::url($item->avatar_path) }}" alt="{{ $item->name }}" class="item__img">
-            <p>{{ $item->name}}</p>
+            <div class="item__detail">
+                <p>{{ $item->name}}</p>
+                <p>￥{{ $item->price}}</p>
+            </div>
             @if($item->purchases_count > 0)
             <span class="sold">SOLD</span>
             @endif

@@ -1,4 +1,25 @@
 .auth__items{
     margin: auto;
-    
+    text-align: center;
+}
+
+.auth__button{
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 26px;
+    margin: 20px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.auth__resend{
+    margin: 20px;
+    text-decoration: underline ;
+    color: blue;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
 }

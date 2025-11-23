@@ -13,9 +13,9 @@
 <div class="profile__items">
     <div class="profile__img--wrapper">
     @if($avatarUrl)
-    <img src="{{ $avatarUrl }}" id="avatarPreview" alt="no image" class="profile__img">
+    <img src="{{ $avatarUrl }}" id="avatarPreview" alt="ユーザー画像が登録されていません" class="profile__img">
     @else
-    <img id="avatarPreview" src="asset('images/default-avatar.png'" alt="画像プレビュー">
+    <img id="avatarPreview" src="{{ asset('images/default-avatar.png')}}" alt="画像プレビュー">
     @endif
     </div>
     <label class="imgedit__button">

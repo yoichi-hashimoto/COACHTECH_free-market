@@ -40,7 +40,7 @@ class ExhibitionController extends Controller
             $item->categories()->sync($validated['category']);
         }
 
-    return redirect()->back()->with('message', '製品情報を登録しました');
+    return redirect()->back()->with('message', '出品が完了しました');
     }
 
 }

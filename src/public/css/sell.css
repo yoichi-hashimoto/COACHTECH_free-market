@@ -60,6 +60,7 @@
     border-radius: 3px;
     border: 1px solid #5F5F5F;
     text-align:start;
+    resize: none;
 }
 
 .section__item{

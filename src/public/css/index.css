@@ -53,3 +53,9 @@
     padding: 5px 10px;
     border-radius: 5px;
 }
+
+.item__detail {
+    display: flex;
+    justify-content:space-between;
+    border-bottom: #5F5F5F solid 1px;
+}

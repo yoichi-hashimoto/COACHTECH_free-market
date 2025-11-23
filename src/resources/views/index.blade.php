@@ -19,12 +19,18 @@
     <div class="item__img--wrap">
         @if($item->purchases_count > 0)
         <img src="{{ $item->avatar_path ? Storage::url($item->avatar_path) :asset('images/default-avatar.png') }}" alt="商品画像" class="item__img">
-        <p>{{ $item->name}}</p>
+        <div class="item__detail">
+            <p>{{ $item->name}}</p>
+            <p>￥{{ $item->price}}</p>
+        </div>
         <span class="sold">SOLD</span>
         @else
         <a class="item__content" href="{{route('item', $item)}}">
         <img src="{{ $item->avatar_path ? Storage::url($item->avatar_path) :asset('images/default-avatar.png') }}" alt="商品画像" class="item__img">
+        <div class="item__detail">
             <p>{{ $item->name}}</p>
+            <p>￥{{ $item->price}}</p>
+        </div>
             @endif
         </a>
     </div>

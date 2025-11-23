@@ -80,12 +80,12 @@
         <p>{{ $message}}</p>
     @enderror
     <h3>商品の説明</h3>
-        <input class="section__item--detail" type="text" name="description" value="{{old('description')}}">
+        <textarea class="section__item--detail" type="text" name="description">{{old('description')}}</textarea>
     @error('description')
         <p>{{ $message}}</p>
     @enderror
     <h3>販売価格</h3>
-        <input class="section__item" type="number" name="price" value="{{old('price')}}">
+        <input class="section__item" type="text" name="price" value="{{old('price')}}">
     @error('price')
         <p>{{ $message}}</p>
     @enderror
