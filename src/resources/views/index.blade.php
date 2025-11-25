@@ -8,8 +8,8 @@
 @section('content')
 
     <div class="select__tab">
-        <a href="{{ route('index')}}">おすすめ</a>
-        <a href="{{ route('mylist',['keyword' =>request('keyword')]) }}">マイリスト</a>
+        <a href="{{ route('index')}}" class="tab__label {{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a>
+        <a href="{{ route('mylist',['keyword' =>request('keyword')]) }}" class="tab__label {{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>
 
 <div class="items__container">

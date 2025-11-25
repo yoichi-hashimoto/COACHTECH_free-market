@@ -12,8 +12,8 @@
         <a href="{{ route('profile.edit')}}" type="submit" class="edit__button">プロフィールを編集</a>
 </div>
     <div class="select__tab">
-        <a href="{{route('mypage',['page'=>'sell'])}}">出品した商品</a>
-        <a href="{{route('mypage',['page'=>'buy'])}}">購入した商品</a>
+        <a href="{{route('mypage',['page'=>'sell'])}}" class="tab__label {{ request('page') === 'sell' ? 'active' : '' }}">出品した商品</a>
+        <a href="{{route('mypage',['page'=>'buy'])}}" class="tab__label {{ request('page') === 'buy' ? 'active' : '' }}">購入した商品</a>
     </div>
 
 <div class="items__container">

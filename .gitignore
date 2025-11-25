@@ -3,3 +3,5 @@ docker/mysql/data/
 /src/vendor
 /vendor
 /src/vendor
+src/.env.testing
+src/.env.testing

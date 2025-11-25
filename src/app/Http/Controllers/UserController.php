@@ -33,7 +33,7 @@ class UserController extends Controller
             return $query->where('name','like',"%{$keyword}%");
             })
             ->get();
-        return view ('index',['items'=>$items,'keyword'=>$keyword,'tab'=>'all']);
+        return view ('index',['items'=>$items,'keyword'=>$keyword,'tab'=>'recommend']);
     }
 
     public function mylist(Request $request)

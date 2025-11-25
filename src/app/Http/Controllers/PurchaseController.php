@@ -37,12 +37,9 @@ class PurchaseController extends Controller
         $validated = $request->validated();
         $user = Auth::user();
         $address = Arr::only($validated,['postal_code','address','building']);
-        $user->address()->updateOrCreate(
-        ['user_id' => $user->id],
-        $address
-        );
+        $user->address()->create($address);
         $returnId = $request->input('return_item_id');
-        return redirect()->route('purchase.show',['item_id'=>$returnId])->with('message','住所が更新されました');
+        return redirect()->route('purchase.show',['item_id'=>$returnId])->with('message','住所が登録されました');
     }
 
 

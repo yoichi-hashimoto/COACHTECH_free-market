@@ -73,3 +73,16 @@
     justify-content:space-between;
     border-bottom: #5F5F5F solid 1px;
 }
+
+.tab__label {
+    margin: 0 2vw;
+    font-size: 20px;
+    text-decoration: none;
+    color: #5F5F5F;
+    cursor: pointer;
+}
+.tab__label.active {
+    border-bottom: 3px solid #5F5F5F;
+    color: black;
+    font-weight: bold;
+}

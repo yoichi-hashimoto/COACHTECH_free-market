@@ -21,8 +21,6 @@ class CreateitemsTable extends Migration
             $table->unsignedInteger('price');
             $table->enum('condition', ['良好','目立った傷や汚れ無し','やや汚れや傷あり','状態が悪い'])->comment('商品状態');
             $table->string('description')->nullable();
-            $table->unsignedInteger('likes_count')->default(0);
-            $table->unsignedInteger('comments_count')->default(0);
             $table->string('avatar_path')->nullable();
             $table->timestamps();
         });
