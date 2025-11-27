@@ -19,7 +19,7 @@ class ExhibitionController extends Controller
     public function store(ExhibitionRequest $request){
         $validated = $request->validated(); 
 
-        $item = new item();
+        $item = new Item();
         $item->user_id     = Auth::id();
         $item->name        = $validated['name'];
         $item->condition   = $validated['condition'];
@@ -36,8 +36,8 @@ class ExhibitionController extends Controller
             $item->save();
         }
 
-        if(!empty($validated['category'])){
-            $item->categories()->sync($validated['category']);
+        if(!empty($validated['categories'])){
+            $item->categories()->sync($validated['categories']);
         }
 
     return redirect()->back()->with('message', '出品が完了しました');

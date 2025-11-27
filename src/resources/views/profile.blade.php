@@ -33,19 +33,19 @@
     @enderror
     </h3>
     <h3>郵便番号 
-        <input type="text" name="postal_code" value="{{ old('postal_code', $addr->postal_code ?? '')}}" placeholder="123-4567">
+        <input type="text" name="postal_code" value="{{ old('postal_code', $address->postal_code ?? '')}}" placeholder="000-0000">
     @error('postal_code')
       <p class="error">{{ $message }}</p>
     @enderror
     </h3>
     <h3>住所
-        <input type="text" name="address" value="{{ old('address' , $addr->address ?? '')}}">
+        <input type="text" name="address" value="{{ old('address' , $address->address ?? '')}}">
     @error('address')
       <p class="error">{{ $message }}</p>
     @enderror
     </h3>
     <h3>建物名
-        <input type="text" name="building" value="{{ old('building', $addr->building ?? '')}}">
+        <input type="text" name="building" value="{{ old('building', $address->building ?? '')}}">
     </h3>
     <button type="submit" class="update__button" >更新する</button>
 

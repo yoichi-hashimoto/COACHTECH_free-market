@@ -13,7 +13,6 @@
     </div>
 
 <div class="items__container">
-
 @forelse($items as $item)   
 
     <div class="item__img--wrap">

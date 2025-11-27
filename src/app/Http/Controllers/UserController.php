@@ -39,7 +39,7 @@ class UserController extends Controller
     public function mylist(Request $request)
     {
         $keyword=trim($request->input('keyword',''));
-     
+
         $items = Item::withCount('purchases')
         ->whereHas('followers',function ($query){
             $query->where('user_id',Auth::id());
@@ -79,7 +79,7 @@ class UserController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'メールアドレスまたはパスワードが正しくありません',
+            'email' => 'ログイン情報が登録されていません',
         ]);
     }
 

@@ -13,11 +13,11 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        $addr = $user->address()->first();
+        $address = $user->address()->first();
         $avatarUrl = $user->avatar_path
         ? Storage::url($user->avatar_path)
         : asset('images/default-avatar.png');
-        return view('profile', ['user'=>$user,'addr'=>$addr,'avatarUrl'=>$avatarUrl,]);
+        return view('profile', ['user'=>$user,'address'=>$address,'avatarUrl'=>$avatarUrl,]);
     }
 
     public function update(ProfileRequest $request)

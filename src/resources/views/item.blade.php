@@ -32,7 +32,7 @@
 <form action="{{route('item.like', $item)}}" method="POST" >
     @csrf
     <div class="like-star__wrap">
-        <button type="submit" name="like" class="star__button">
+        <button type="submit" name="like" class="star__button{{$liked ? ' star__button--liked' : ''}}">
         @if($liked)
             <img src="{{asset('images/afterいいねボタン.png')}}"  value="いいねボタン" class="like__star">
         @else

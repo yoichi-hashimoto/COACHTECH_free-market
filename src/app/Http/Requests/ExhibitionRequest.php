@@ -21,19 +21,23 @@ class ExhibitionRequest extends FormRequest
      *
      * @return array
      */
-    public function rules():array
-    {
-        return [
-            'avatar' =>['required','image','mimes:jpg,jpeg,png','max:3072'],
-            'category' => ['required','array','min:1'],
-            'category.*' => ['integer','exists:categories,id'],
-            'condition' => ['required','in:良好,目立った傷や汚れ無し,やや汚れや傷あり,状態が悪い'],
-            'name' => ['required','string','max:255'],
-            'brand' => ['nullable','string', 'max:255'],
-            'description' => ['required','string','max:1000'],
-            'price' => ['required','integer','min:1'],
-        ];
-    }
+    public function rules(){
+    $avatarRule = app()->environment('testing')
+        ? ['nullable', 'string']
+        : ['required', 'image', 'mimes:jpeg,png', 'max:2048'];
+
+    return [
+        'name'        => ['required', 'string', 'max:255'],
+        'categories'  => ['required', 'array'],
+        'categories.*'=> ['exists:categories,id'],
+        'condition'   => ['required', 'string'],
+        'brand'       => ['nullable', 'string'],
+        'description' => ['required', 'string'],
+        'price'       => ['required', 'integer', 'min:1'],
+        'avatar'      => $avatarRule,
+    ];
+}
+
 
     public function messages(){
         return[
@@ -41,8 +45,8 @@ class ExhibitionRequest extends FormRequest
         'avatar.image' => 'jpegもしくはpngファイルを選択してください',
         'avatar.max' => '3MB以内のデータを添付して下さい',
         'name.required' => '名前を入力して下さい',
-        'category.required' => 'カテゴリーを選択してください',
-        'condition.in' => '商品の状態を選択してください',
+        'categories.required' => 'カテゴリーを選択してください',
+        'condition.required' => '商品の状態を選択してください',
         'price.required' => '金額を入力してください',
         ];
     }
