@@ -22,10 +22,13 @@
 
   ##開発環境
 
-    -トップ画面 http://localhost/
-    -ユーザー登録画面 http://localhost/register/
-    -phpMyAdmin http://localhost:8080/
-    -Mailhog http://localhost:8025/
+    -トップ画面  http://localhost/
+
+    -ユーザー登録画面  http://localhost/register/
+
+    -phpMyAdmin  http://localhost:8080/
+
+    -Mailhog  http://localhost:8025/
 
   ##使用技術
 
