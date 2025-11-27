@@ -1,6 +1,8 @@
 #アプリケーション名  
 フリマアプリ
 
+---
+
 #概要
 このアプリケーションは、Laravel を使用して構築したフリマアプリです。  
 ユーザー登録、商品出品、購入、コメント、いいね機能など、基本的なフリマ機能を実装しています。
@@ -8,6 +10,7 @@
 ---
 
 #環境構築
+
 ##Docker ビルド
 
     -git clone git@github.com:yoichi-hashimoto/COACHTECH_free-market.git
@@ -24,6 +27,8 @@
     -php artisan key generate
     -php artisan migrate
     -php artisa db:seed
+
+---
 
 #開発環境
 
