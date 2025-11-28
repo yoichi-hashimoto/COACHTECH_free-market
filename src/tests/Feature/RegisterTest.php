@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class RegisterTest extends TestCase
 {
@@ -82,10 +83,12 @@ class RegisterTest extends TestCase
         ];
         $response = $this->post('/register', $formData);
         $response->assertStatus(302);
-        $response->assertRedirect('/emnail/verify');
+        $response->assertRedirect('/email/verify');
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
-        'email_verified_at' => null,'email_token' => anything(),
+        'email_verified_at' => null,
         ]);
-
-}}
+               $user = User::where('email', 'test@example.com')->first();
+        $this->assertNotNull($user->email_token);
+    }
+}

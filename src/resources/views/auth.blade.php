@@ -17,9 +17,9 @@
 <div class="auth__items">
     <h3>登録いただいたメールアドレスに認証メールを送りました</br>
     メール認証を完了してください。</h3>
-<form action="{{ route('auth.check') }}" method="POST">
-    @csrf
-    <button class="auth__button" >認証はこちらから</button>
+    <a href="http://localhost:8025">
+        <button class="auth__button">認証はこちらから</button>
+    </a>
 </form>
 <form method="POST" action="{{ route('auth.resend') }}">
     @csrf

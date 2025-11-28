@@ -40,7 +40,7 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-    Route::post('/auth/check',[MailController::class,'check'])->name('auth.check');
+    // Route::post('/auth/check',[MailController::class,'check'])->name('auth.check');
     Route::get('/auth/verify/{token}',[MailController::class,'verify'])->name('auth.verify');
     Route::post('/auth/resend',[MailController::class,'resend'])->name('auth.resend')->middleware('throttle:6,1');
     Route::post('/logout',[UserController::class, 'logout'])->name('logout');
