@@ -22,7 +22,7 @@
 
     -docker-compose exec php bash
 
-    -Composer install
+    -composer install
 
     -cp .env.example .env、環境変数を変更
 
