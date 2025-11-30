@@ -79,4 +79,16 @@ class PurchaseController extends Controller
 
         return redirect()->route('home')->with('message','購入が完了しました');
     }
+
+     public function cancel(Request $request, $item_id = null)
+    {
+        if ($item_id) {
+            return redirect()
+                ->route('purchase.show', ['item_id' => $item_id])
+                ->with('message', '支払いがキャンセルされました。');
+        }
+        return redirect()
+            ->route('index')
+            ->with('message', '支払いがキャンセルされました。');
+    }
 }
