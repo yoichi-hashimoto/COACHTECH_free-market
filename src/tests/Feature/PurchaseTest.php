@@ -98,7 +98,7 @@ class PurchaseTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->post('/address',[
+        $this->post('/purchase/address',[
             'return_item_id' => $item->id,
             'postal_code'=>'000-0000',
             'address'=>'テストアドレス',
@@ -118,7 +118,7 @@ class PurchaseTest extends TestCase
 
         $this->actingAs($user);
 
-        $this->post('/address',[
+        $this->post('/purchase/address',[
             'return_item_id' => $item->id,
             'postal_code'=>'000-0000',
             'address'=>'テストアドレス',

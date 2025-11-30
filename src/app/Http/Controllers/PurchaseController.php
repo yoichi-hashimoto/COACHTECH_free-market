@@ -27,9 +27,9 @@ class PurchaseController extends Controller
         return view ('purchase',compact('address','item'));
     }
 
-    public function edit(Request $request){
+    public function edit($item_id){
         $address = Auth::user()->address()->first();
-        $itemId = $request->query('item_id');
+        $itemId = $item_id;
         return view ('address',compact('address','itemId'));
     }
 

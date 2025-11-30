@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Item;
 use App\Models\User;
-use App\Models\Like;
 use App\Models\Category;
 
 class ItemDetailTest extends TestCase

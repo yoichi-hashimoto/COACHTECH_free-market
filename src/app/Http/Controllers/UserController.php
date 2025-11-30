@@ -10,7 +10,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 use App\Models\Item;
-use App\Models\Like;
 use App\Models\Purchase;
 use App\Mail\AuthMail;
 use Illuminate\Support\Facades\Storage;

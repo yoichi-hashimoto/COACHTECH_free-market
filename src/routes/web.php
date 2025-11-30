@@ -24,7 +24,6 @@ use App\Http\Controllers\StripeController;
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/item/{item}',[ItemController::class,'show'])->name('item');
-// Route::get('/auth',[MailController::class,'showAuth'])->name('auth');
 Route::get('/purchase/success', [PurchaseController::class,'success'])->name('purchase.success');
 
 Route::middleware('guest')->group(function(){
@@ -40,7 +39,6 @@ Route::middleware('guest')->group(function(){
 });
 
 Route::middleware('auth')->group(function(){
-    // Route::post('/auth/check',[MailController::class,'check'])->name('auth.check');
     Route::get('/auth/verify/{token}',[MailController::class,'verify'])->name('auth.verify');
     Route::post('/auth/resend',[MailController::class,'resend'])->name('auth.resend')->middleware('throttle:6,1');
     Route::post('/logout',[UserController::class, 'logout'])->name('logout');
@@ -54,19 +52,15 @@ Route::middleware('auth','verified')->group(function(){
 
     Route::get('/mypage', [UserController::class,'mypage'])->name('mypage');
 
-    Route::get('/mypage/profile', fn ()
-    => view('profile'));
-
 
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('/purchase/{item_id}', [PurchaseController::class,'show'])->name('purchase.show');
-    Route::get('/purchase/cancel', fn () => view('purchase_cancel'))->name('purchase.cancel');
     Route::post('/purchase', [PurchaseController::class,'store'])->name('purchase.store');
 
-    Route::get('/address', [PurchaseController::class,'edit'])->name('address.edit');
-    Route::post('/address', [PurchaseController::class,'update'])->name('address.update');
+    Route::get('purchase/address/{item_id}', [PurchaseController::class,'edit'])->name('address.edit');
+    Route::post('purchase/address', [PurchaseController::class,'update'])->name('address.update');
 
     Route::get('/sell', [ExhibitionController::class, 'create'])->name('sell');
     Route::post('/sell', [ExhibitionController::class, 'store'])->name('sell.store');
