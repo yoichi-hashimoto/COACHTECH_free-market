@@ -26,6 +26,7 @@
 
     -cp .env.example .env、環境変数を変更
 
+    ※artisanはsrc配下です。
     -php artisan key generate
     -php artisan migrate
     -php artisa db:seed
